@@ -12,22 +12,44 @@ public class Vestuario {
 	public static void main(String[] args) {
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		
-		Item item = new SupInterno("Camisa Ceará", "Riachuello", "Azul", ConservacaoEnum.NOVA, new GregorianCalendar(2025, GregorianCalendar.JULY, 01), TamanhoEnum.M, "Esportivo");
+		
+		//Possibilidade do usuario criar lojas(Usar um hashmao pra armazenar ai cadastra a loja de origem de acordo com esses caras
 		
 		BancoItens Itens = new BancoItens();
+		BancoEmprestados Emprestados = new BancoEmprestados();
 		
-		Itens.AdicionarItem(item);		
-		Itens.AdicionarItem(new SupExterno("Casaco Adidas", "Adidas", "Preto", ConservacaoEnum.RUIM, new GregorianCalendar(2025, GregorianCalendar.JUNE, 25), TamanhoEnum.M, "Casual"));
+		
+		Item item = new SupInterno("Camisa Ceará", "Riachuello", "Azul", ConservacaoEnum.NOVA, new GregorianCalendar(2025, GregorianCalendar.JULY, 01), TamanhoEnum.M, "Esportivo");
+		Itens.CadastrarItem(item);		
+		
+		Itens.CadastrarItem(new SupExterno("Casaco Adidas", "Adidas", "Preto", ConservacaoEnum.RUIM, new GregorianCalendar(2025, GregorianCalendar.JUNE, 25), TamanhoEnum.M, "Casual"));
 		
 		Item A = Itens.getItem("Casaco Adidas");
 		
-		((Roupa) A).lavar();
+		Itens.CadastrarItem(new Intimo("Cueca", "Adidas", "Preto", ConservacaoEnum.BOA, new GregorianCalendar(2025, GregorianCalendar.JULY, 12), TamanhoEnum.M));
 		
-		((Normal)item).registrarEmprestimo(15);
+		Item i = Itens.getItem("Cueca");
 		
-		System.out.println(item.getID());
+		i.Emprestar(Emprestados, 15);
 		
-		System.out.println("Dias para a devolução:"+((Normal) item).diasParadevolucao());
+		item.Emprestar(Emprestados, 15);
+		A.Emprestar(Emprestados, new GregorianCalendar(2025, GregorianCalendar.JULY, 20));
+		
+		Emprestados.ListarEmprestados();
+		
+		item.Devolucao(Emprestados);
+		
+		Emprestados.ListarEmprestados();
+		
+		Itens.ListarItens();
+		
+		Itens.RemoverItem("Cueca");
+		
+		Itens.ListarItens();
+		
+		Item a = Itens.getItem("Camisa Brasil");
+		
+		
 		
 		
 

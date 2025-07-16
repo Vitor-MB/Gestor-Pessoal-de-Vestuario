@@ -4,12 +4,12 @@ import java.util.GregorianCalendar;
 
 import br.ufc.tp.vestuario.BancoEmprestados;
 
-public class SupExterno extends Superior implements IEmprestavel {
+public class Calcado extends Superior implements IEmprestavel {
 	protected Boolean emprestado;
 	protected GregorianCalendar dataEmprestimo;
 	protected GregorianCalendar dataDevolucao;
 	
-	public SupExterno(String id, String Loja_Origem, String Cor, ConservacaoEnum Conservacao, GregorianCalendar ult_lavagem, TamanhoEnum tamanho, String Estilo) {
+	public Calcado(String id, String Loja_Origem, String Cor, ConservacaoEnum Conservacao, GregorianCalendar ult_lavagem, TamanhoEnum tamanho, String Estilo) {
 		super(id, Loja_Origem, Cor, Conservacao, ult_lavagem, tamanho, Estilo);
 		emprestado = false;
 	}

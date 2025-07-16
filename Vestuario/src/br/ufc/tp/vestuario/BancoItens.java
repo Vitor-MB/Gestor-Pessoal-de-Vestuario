@@ -13,8 +13,7 @@ public class BancoItens {
 		Itens = new HashMap<String, Item>();
 	}
 	
-	
-	public void AdicionarItem(Item i) {
+	public void CadastrarItem(Item i) {
 		if(!Itens.containsKey(i.getID())) {
 			Itens.put(i.getID(), i);
 			System.out.println("Item adicionado com sucesso!");
@@ -37,7 +36,7 @@ public class BancoItens {
 			Itens.remove(Id);
 			System.out.println("Item removido");
 		}else {
-			System.out.println("Esse item não existe");
+			System.out.println("Esse item não existe!");
 		}
 	}
 	
@@ -46,12 +45,21 @@ public class BancoItens {
 			System.out.println("Item encontrado!");
 			return Itens.get(Id);
 		}else {
-			System.out.println("Esse item nao existe");
+			System.out.println("Esse item nao existe!");
 			return null;
 		}
 	
 	}
 	
+	public Map<String, Item> getBancoItens(){
+		return Itens;
+	}
+	
+	public void ListarItens() {
+		for(Item i : this.Itens.values()) {
+			System.out.println("ID:\"" + i.getID() +"\"/ Conservação: "+ i.get_conservacao()+" /Loja: " + i.getLoja()+" /Cor: " + i.getCor());
+		}
+	}
 	
 	
 }

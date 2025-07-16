@@ -2,50 +2,68 @@ package br.ufc.tp.vestuario.itens;
 
 import java.util.GregorianCalendar;
 
+import br.ufc.tp.vestuario.BancoEmprestados;
+
 public class Acessorio extends Item implements IEmprestavel {
 
 	protected MaterialEnum material;
-	protected Boolean Emprestado;
-	protected GregorianCalendar DataEmprestimo;
+	protected Boolean emprestado;
+	protected GregorianCalendar dataEmprestimo;
+	protected GregorianCalendar dataDevolucao;
 	
 	public Acessorio(String id, String Loja_Origem, String Cor, ConservacaoEnum Conservacao, MaterialEnum Material) {
 		super(id, Loja_Origem,Cor, Conservacao);
 		this.material = Material;
-		Emprestado = false;
+		emprestado = false;
 	}
+	
 	
 	public String getMaterial() {
 		return material.getCode();
 	}
 	
-	public void registrarEmprestimo(GregorianCalendar Deadline) {
-		if(Emprestado) {
+	// ------------------------ METODOS EMPRESTIMO ------------------------------
+	
+	public void registrarEmprestimo(BancoEmprestados Emprestados, GregorianCalendar Deadline) {
+		if(emprestado) {
 			System.out.println("Item já emprestado");
 			
 		}else {
-			Emprestado = true;
-			DataEmprestimo = Deadline;
-			System.out.println("Item empretado");
+			emprestado = true;
+			dataEmprestimo = new GregorianCalendar();
+			dataDevolucao = Deadline;
+			Emprestados.adicionar(this);
+			System.out.println("Item emprestado com sucesso!");
 		}
 	}
 	
-	public void registrarEmprestimo(int qtdDiad) {
-		if(Emprestado) {
+	public void registrarEmprestimo(BancoEmprestados Emprestados, int qtdDiad) {
+		if(emprestado) {
 			System.out.println("Item já emprestado");
 		}else {
-			Emprestado = true;
-			DataEmprestimo = new GregorianCalendar();
-			DataEmprestimo.add(GregorianCalendar.DATE, qtdDiad);
-			System.out.println("Item empretado");
+			emprestado = true;
+			dataDevolucao = new GregorianCalendar();
+			dataEmprestimo = new GregorianCalendar();
+			dataDevolucao.add(GregorianCalendar.DATE, qtdDiad);
+			Emprestados.adicionar(this);
+			System.out.println("Item emprestado com sucesso!");
 		}
+	}
+	
+	public GregorianCalendar getDataEmprestimo() {
+		return dataEmprestimo;
+	}
+	
+	public GregorianCalendar getDataDevolucao() {
+		return dataDevolucao;
 	}
 	
 	public int qtdDiasEmprestado() {
-		if(Emprestado) {
-			long millis1 = DataEmprestimo.getTimeInMillis();
+		if(emprestado) {
+			long millis1 = dataEmprestimo.getTimeInMillis();
 			long millis2 = new GregorianCalendar().getTimeInMillis();
 			
-			int Dias = (int)((millis1-millis2)/(1000*60*60*24));
+			int Dias = (int)Math.ceil((millis2-millis1)/(1000.0*60*60*24));
 			
 			return Dias;
 		}
@@ -55,11 +73,11 @@ public class Acessorio extends Item implements IEmprestavel {
 	}
 	
 	public int diasParadevolucao() {
-		if(Emprestado) {
-			long Total = DataEmprestimo.getTimeInMillis();
+		if(emprestado) {
+			long Total = dataDevolucao.getTimeInMillis();
 			long millis1 = new GregorianCalendar().getTimeInMillis();
 			
-			int Dias = (int)((Total-millis1)/(1000*60*60*24));
+			int Dias = (int)Math.ceil((Total-millis1)/(1000.0*60*60*24));
 			
 			return Dias;
 		}
@@ -68,11 +86,17 @@ public class Acessorio extends Item implements IEmprestavel {
 		}
 	}
 	
-	public void registrarDevolucao() {
-		if(Emprestado) {
-			Emprestado = false;
+	public void registrarDevolucao(BancoEmprestados Emprestados) {
+		if(emprestado) {
+			emprestado = false;
+			Emprestados.remover(this);
+		}else {
+			System.out.println("Item não está Emprestado");
 		}
 	}
 	
-
+	public Boolean isEmprestado() {
+		return emprestado;
+	}
+	
 }

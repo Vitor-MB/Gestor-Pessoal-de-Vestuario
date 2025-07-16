@@ -1,5 +1,8 @@
 package br.ufc.tp.vestuario.itens;
 
+import java.util.GregorianCalendar;
+
+import br.ufc.tp.vestuario.*;
 
 public abstract class Item {
 
@@ -42,6 +45,38 @@ public abstract class Item {
 	}
 	public ConservacaoEnum get_conservacao() {
 		return Conservacao;
+	}
+	public Boolean isEmprestavel() {
+		return this instanceof IEmprestavel;
+	}
+	
+	public void Emprestar(BancoEmprestados Emprestados, int qtdDias) {
+		if(isEmprestavel()) {
+			IEmprestavel e = ((IEmprestavel) this);
+			e.registrarEmprestimo(Emprestados, qtdDias);
+		}
+		else {
+			System.out.println("Esse item não é Emprestável!\n");
+		}
+	}
+	public void Emprestar(BancoEmprestados Emprestados, GregorianCalendar Deadline) {
+		if(isEmprestavel()) {
+			IEmprestavel e = ((IEmprestavel) this);
+			e.registrarEmprestimo(Emprestados, Deadline);
+		}
+		else {
+			System.out.println("Esse item não é Emprestável!\n");
+		}
+	}
+	
+	public void Devolucao(BancoEmprestados Emprestados) {
+		if(isEmprestavel()) {
+			IEmprestavel e = ((IEmprestavel) this);
+			e.registrarDevolucao(Emprestados);
+		}
+		else {
+			System.out.println("Esse item não é Emprestável!\n");
+		}
 	}
 	
 }
