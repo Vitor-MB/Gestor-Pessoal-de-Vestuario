@@ -13,30 +13,36 @@ public class BancoItens {
 		Itens = new HashMap<String, Item>();
 	}
 	
-	public void CadastrarItem(Item i) {
+	public Boolean CadastrarItem(Item i) {
 		if(!Itens.containsKey(i.getID())) {
 			Itens.put(i.getID(), i);
 			System.out.println("Item adicionado com sucesso!");
+			return true;
 		}else {
 			System.out.println("Já existe um item com esse ID");
+			return false;
 		}
 	}
 	
-	public void RemoverItem(Item i) {
+	public Boolean RemoverItem(Item i) {
 		if(Itens.containsKey(i.getID())) {
 			Itens.remove(i.getID());
 			System.out.println("Item removido");
+			return true;
 		}else {
 			System.out.println("Esse item não existe");
+			return false;
 		}
 	}
 	
-	public void RemoverItem(String Id) {
+	public Boolean RemoverItem(String Id) {
 		if(Itens.containsKey(Id)) {
 			Itens.remove(Id);
 			System.out.println("Item removido");
+			return true;
 		}else {
 			System.out.println("Esse item não existe!");
+			return false;
 		}
 	}
 	
@@ -56,9 +62,11 @@ public class BancoItens {
 	}
 	
 	public void ListarItens() {
+		System.out.println("\nLista de Itens:");
 		for(Item i : this.Itens.values()) {
-			System.out.println("ID:\"" + i.getID() +"\"/ Conservação: "+ i.get_conservacao()+" /Loja: " + i.getLoja()+" /Cor: " + i.getCor());
+			System.out.println("ID:\"" + i.getID() +"\"/ Conservação: "+ i.getConservacao()+" /Loja: " + i.getLoja()+" /Cor: " + i.getCor());
 		}
+		System.out.println();
 	}
 	
 	

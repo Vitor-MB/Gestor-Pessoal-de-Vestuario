@@ -16,9 +16,10 @@ public class Inferior extends Superior implements IEmprestavel {
 	
 	// ------------------------ METODOS EMPRESTIMO ------------------------------
 	
-	public void registrarEmprestimo(BancoEmprestados Emprestados, GregorianCalendar Deadline) {
+	public Boolean registrarEmprestimo(BancoEmprestados Emprestados, GregorianCalendar Deadline) {
 		if(emprestado) {
 			System.out.println("Item já emprestado");
+			return false;
 			
 		}else {
 			emprestado = true;
@@ -26,12 +27,14 @@ public class Inferior extends Superior implements IEmprestavel {
 			dataDevolucao = Deadline;
 			Emprestados.adicionar(this);
 			System.out.println("Item emprestado com sucesso!");
+			return true;
 		}
 	}
 	
-	public void registrarEmprestimo(BancoEmprestados Emprestados, int qtdDiad) {
+	public Boolean registrarEmprestimo(BancoEmprestados Emprestados, int qtdDiad) {
 		if(emprestado) {
 			System.out.println("Item já emprestado");
+			return false;
 		}else {
 			emprestado = true;
 			dataDevolucao = new GregorianCalendar();
@@ -39,6 +42,7 @@ public class Inferior extends Superior implements IEmprestavel {
 			dataDevolucao.add(GregorianCalendar.DATE, qtdDiad);
 			Emprestados.adicionar(this);
 			System.out.println("Item emprestado com sucesso!");
+			return true;
 		}
 	}
 	
@@ -78,12 +82,14 @@ public class Inferior extends Superior implements IEmprestavel {
 		}
 	}
 	
-	public void registrarDevolucao(BancoEmprestados Emprestados) {
+	public Boolean registrarDevolucao(BancoEmprestados Emprestados) {
 		if(emprestado) {
 			emprestado = false;
 			Emprestados.remover(this);
+			return true;
 		}else {
 			System.out.println("Item não está Emprestado");
+			return false;
 		}
 	}
 	

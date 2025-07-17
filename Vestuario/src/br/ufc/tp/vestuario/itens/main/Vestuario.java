@@ -30,27 +30,22 @@ public class Vestuario {
 		
 		Item i = Itens.getItem("Cueca");
 		
-		i.Emprestar(Emprestados, 15);
 		
 		item.Emprestar(Emprestados, 15);
-		A.Emprestar(Emprestados, new GregorianCalendar(2025, GregorianCalendar.JULY, 20));
 		
-		Emprestados.ListarEmprestados();
-		
-		item.Devolucao(Emprestados);
-		
-		Emprestados.ListarEmprestados();
 		
 		Itens.ListarItens();
-		
-		Itens.RemoverItem("Cueca");
-		
+		i.Editar(Itens, new Intimo("Cueca", "CK", "Azul", ConservacaoEnum.RUIM, new GregorianCalendar(2025, GregorianCalendar.JULY, 12), TamanhoEnum.PP));
+		item.Editar(Itens, new SupInterno("Camisa Ceará", "Vozão", "Preta", ConservacaoEnum.BOA, new GregorianCalendar(2025, GregorianCalendar.JULY, 01), TamanhoEnum.M, "Esportivo"));
 		Itens.ListarItens();
 		
-		Item a = Itens.getItem("Camisa Brasil");
+		Item B = new SupInterno("Camisa Basica", "Riachuello", "Preta", ConservacaoEnum.NOVA, new GregorianCalendar(2025, GregorianCalendar.JULY, 01), TamanhoEnum.M, "Casual");
+		B.Emprestar(Emprestados, 15);
 		
+		Emprestados.ListarEmprestados();
+		Itens.ListarItens();
 		
-		
+
 		
 
 	}

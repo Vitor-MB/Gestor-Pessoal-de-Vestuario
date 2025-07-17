@@ -21,15 +21,6 @@ public abstract class Item {
 		qtdUsos = 0;
 	}
 	
-	/*
-	//Opção do usuário de cadastrar
-	public abstract boolean cadastrar();
-	//Opção de editar
-	public abstract boolean editar();
-	//Opção de deletar
-	public abstract boolean deletar();
-	*/
-	
 	//Gets
 	public String getID() {
 		return id;
@@ -43,13 +34,14 @@ public abstract class Item {
 	public String getLoja() {
 		return Loja_Origem;
 	}
-	public ConservacaoEnum get_conservacao() {
+	public ConservacaoEnum getConservacao() {
 		return Conservacao;
 	}
 	public Boolean isEmprestavel() {
 		return this instanceof IEmprestavel;
 	}
 	
+	//EMPRESTAR
 	public void Emprestar(BancoEmprestados Emprestados, int qtdDias) {
 		if(isEmprestavel()) {
 			IEmprestavel e = ((IEmprestavel) this);
@@ -72,11 +64,57 @@ public abstract class Item {
 	public void Devolucao(BancoEmprestados Emprestados) {
 		if(isEmprestavel()) {
 			IEmprestavel e = ((IEmprestavel) this);
-			e.registrarDevolucao(Emprestados);
+			if(e.registrarDevolucao(Emprestados)) 
+				System.out.println(this.getID() + " Devolvido");
 		}
 		else {
 			System.out.println("Esse item não é Emprestável!\n");
 		}
 	}
+		
+		
+	//EDITAR ITEM
+	public void Editar(BancoItens Itens, Item editado) {
+		//Verifica se sao da mesma classe
+		if (!this.getClass().equals(editado.getClass())) {
+	        System.out.println("Itens de tipos diferentes. Não é possível editar.");
+	        return;
+	    }
+		
+		if(this instanceof Roupa) {
+			Roupa modificado = ((Roupa) editado);
+			Roupa i = ((Roupa) this);
+			
+			//Caso mude o ID, cadastrar novamente no HashMap com outro ID
+			if(this.id != editado.id) {
+				Itens.RemoverItem(this);
+				this.id = editado.id;
+				Itens.CadastrarItem(this);	
+			}
+			this.Cor = editado.Cor;
+			this.Conservacao = editado.Conservacao;
+			this.Loja_Origem = editado.Loja_Origem;
+			i.tamanho = modificado.tamanho;
+			System.out.println("Item editado!\n");
+			
+		}
+		else if(this instanceof Acessorio) {
+			Acessorio modificado = ((Acessorio) editado);
+			Acessorio i = ((Acessorio) this);
+			
+			if(this.id != editado.id) {
+				Itens.RemoverItem(this);
+				this.id = editado.id;
+				Itens.CadastrarItem(this);	
+			}
+			this.Cor = editado.Cor;
+			this.Conservacao = editado.Conservacao;
+			this.Loja_Origem = editado.Loja_Origem;
+			i.material = modificado.material;
+			System.out.println("Item editado!\n");
+		}
+		
+	}
+	
 	
 }

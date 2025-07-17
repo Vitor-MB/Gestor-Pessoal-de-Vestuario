@@ -11,13 +11,13 @@ public interface IEmprestavel {
 	
 	public GregorianCalendar getDataDevolucao();
     
-	public void registrarEmprestimo(BancoEmprestados Emprestados, GregorianCalendar Deadline);
+	public Boolean registrarEmprestimo(BancoEmprestados Emprestados, GregorianCalendar Deadline);
 	
-	public void registrarEmprestimo(BancoEmprestados Emprestados, int qtdDiad);
+	public Boolean registrarEmprestimo(BancoEmprestados Emprestados, int qtdDiad);
 	
 	public int qtdDiasEmprestado();
 	
 	public int diasParadevolucao();
 	
-	public void registrarDevolucao(BancoEmprestados Emprestados);
+	public Boolean registrarDevolucao(BancoEmprestados Emprestados);
 }
