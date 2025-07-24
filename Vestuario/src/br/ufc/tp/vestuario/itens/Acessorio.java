@@ -3,6 +3,8 @@ package br.ufc.tp.vestuario.itens;
 import java.util.GregorianCalendar;
 
 import br.ufc.tp.vestuario.BancoEmprestados;
+import br.ufc.tp.vestuario.excecoes.JaEmprestadoException;
+import br.ufc.tp.vestuario.excecoes.NaoEmprestadoException;
 
 public class Acessorio extends Item implements IEmprestavel {
 
@@ -24,7 +26,7 @@ public class Acessorio extends Item implements IEmprestavel {
 	
 	// ------------------------ METODOS EMPRESTIMO ------------------------------
 	
-	public Boolean registrarEmprestimo(BancoEmprestados Emprestados, GregorianCalendar Deadline) {
+	public boolean registrarEmprestimo(BancoEmprestados Emprestados, GregorianCalendar Deadline) throws JaEmprestadoException {
 		if(emprestado) {
 			System.out.println("Item já emprestado");
 			return false;
@@ -39,7 +41,7 @@ public class Acessorio extends Item implements IEmprestavel {
 		}
 	}
 	
-	public Boolean registrarEmprestimo(BancoEmprestados Emprestados, int qtdDiad) {
+	public boolean registrarEmprestimo(BancoEmprestados Emprestados, int qtdDiad) throws JaEmprestadoException {
 		if(emprestado) {
 			System.out.println("Item já emprestado");
 			return false;
@@ -90,7 +92,7 @@ public class Acessorio extends Item implements IEmprestavel {
 		}
 	}
 	
-	public Boolean registrarDevolucao(BancoEmprestados Emprestados) {
+	public boolean registrarDevolucao(BancoEmprestados Emprestados) throws NaoEmprestadoException {
 		if(emprestado) {
 			emprestado = false;
 			Emprestados.remover(this);

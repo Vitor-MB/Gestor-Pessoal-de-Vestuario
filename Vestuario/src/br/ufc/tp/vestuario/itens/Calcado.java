@@ -3,20 +3,26 @@ package br.ufc.tp.vestuario.itens;
 import java.util.GregorianCalendar;
 
 import br.ufc.tp.vestuario.BancoEmprestados;
+import br.ufc.tp.vestuario.excecoes.JaEmprestadoException;
+import br.ufc.tp.vestuario.excecoes.NaoEmprestadoException;
 
-public class Calcado extends Superior implements IEmprestavel {
+
+public class Calcado extends Item implements IEmprestavel {
 	protected Boolean emprestado;
 	protected GregorianCalendar dataEmprestimo;
 	protected GregorianCalendar dataDevolucao;
 	
-	public Calcado(String id, String Loja_Origem, String Cor, ConservacaoEnum Conservacao, GregorianCalendar ult_lavagem, TamanhoEnum tamanho, String Estilo) {
-		super(id, Loja_Origem, Cor, Conservacao, ult_lavagem, tamanho, Estilo);
+	protected String Estilo;
+	protected String tamanho;
+	
+	public Calcado(String id, String Loja_Origem, String Cor, ConservacaoEnum Conservacao, String tamanho, String Estilo) {
+		super(id, Loja_Origem, Cor, Conservacao);
+		this.Estilo = Estilo;
+		this.tamanho = tamanho;
 		emprestado = false;
 	}
 	
-	// ------------------------ METODOS EMPRESTIMO ------------------------------
-	
-	public Boolean registrarEmprestimo(BancoEmprestados Emprestados, GregorianCalendar Deadline) {
+	public boolean registrarEmprestimo(BancoEmprestados Emprestados, GregorianCalendar Deadline) throws JaEmprestadoException {
 		if(emprestado) {
 			System.out.println("Item já emprestado");
 			return false;
@@ -31,7 +37,7 @@ public class Calcado extends Superior implements IEmprestavel {
 		}
 	}
 	
-	public Boolean registrarEmprestimo(BancoEmprestados Emprestados, int qtdDiad) {
+	public boolean registrarEmprestimo(BancoEmprestados Emprestados, int qtdDiad) throws JaEmprestadoException {
 		if(emprestado) {
 			System.out.println("Item já emprestado");
 			return false;
@@ -54,7 +60,7 @@ public class Calcado extends Superior implements IEmprestavel {
 		return dataDevolucao;
 	}
 	
-	public int qtdDiasEmprestado() {
+	public int qtdDiasEmprestado() throws NaoEmprestadoException {
 		if(emprestado) {
 			long millis1 = dataEmprestimo.getTimeInMillis();
 			long millis2 = new GregorianCalendar().getTimeInMillis();
@@ -64,11 +70,11 @@ public class Calcado extends Superior implements IEmprestavel {
 			return Dias;
 		}
 		else {
-			return 0;
+			throw new NaoEmprestadoException(this.getID());
 		}
 	}
 	
-	public int diasParadevolucao() {
+	public int diasParadevolucao() throws NaoEmprestadoException {
 		if(emprestado) {
 			long Total = dataDevolucao.getTimeInMillis();
 			long millis1 = new GregorianCalendar().getTimeInMillis();
@@ -78,11 +84,11 @@ public class Calcado extends Superior implements IEmprestavel {
 			return Dias;
 		}
 		else {
-			return 0;
+			throw new NaoEmprestadoException(this.getID());
 		}
 	}
 	
-	public Boolean registrarDevolucao(BancoEmprestados Emprestados) {
+	public boolean registrarDevolucao(BancoEmprestados Emprestados) throws NaoEmprestadoException {
 		if(emprestado) {
 			emprestado = false;
 			Emprestados.remover(this);
@@ -93,8 +99,15 @@ public class Calcado extends Superior implements IEmprestavel {
 		}
 	}
 	
+	
 	public Boolean isEmprestado() {
 		return emprestado;
 	}
-
+	
+	public String gettamanho() {
+		return tamanho;
+	}
+	public String getEstilo() {
+		return Estilo;
+	}
 }

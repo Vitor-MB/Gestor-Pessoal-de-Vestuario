@@ -2,17 +2,18 @@ package br.ufc.tp.vestuario.itens;
 
 
 public enum ConservacaoEnum {
-	RUIM(1),
-	BOA(2),
-	NOVA(3);
+	RUIM("RUIM"),
+	REGULAR("REGULAR"),
+	BOA("BOA"),
+	EXCELENTE("EXCELENTE");
 	
-	private Integer code;
+	private String code;
 	
-	ConservacaoEnum(Integer code){
+	ConservacaoEnum(String code){
 		this.code = code;
 	}
 	
-	public Integer getCode() {
+	public String getString() {
 		return code;
 	}
 }

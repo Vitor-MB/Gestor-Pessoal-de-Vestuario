@@ -3,6 +3,8 @@ package br.ufc.tp.vestuario.itens;
 import java.util.GregorianCalendar;
 
 import br.ufc.tp.vestuario.BancoEmprestados;
+import br.ufc.tp.vestuario.excecoes.JaEmprestadoException;
+import br.ufc.tp.vestuario.excecoes.NaoEmprestadoException;
 
 public interface IEmprestavel {
 	public Boolean isEmprestado();
@@ -11,13 +13,13 @@ public interface IEmprestavel {
 	
 	public GregorianCalendar getDataDevolucao();
     
-	public Boolean registrarEmprestimo(BancoEmprestados Emprestados, GregorianCalendar Deadline);
+	public boolean registrarEmprestimo(BancoEmprestados Emprestados, GregorianCalendar Deadline) throws JaEmprestadoException;
 	
-	public Boolean registrarEmprestimo(BancoEmprestados Emprestados, int qtdDiad);
+	public boolean registrarEmprestimo(BancoEmprestados Emprestados, int qtdDiad) throws JaEmprestadoException;
 	
-	public int qtdDiasEmprestado();
+	public int qtdDiasEmprestado() throws NaoEmprestadoException;
 	
-	public int diasParadevolucao();
+	public int diasParadevolucao() throws NaoEmprestadoException;
 	
-	public Boolean registrarDevolucao(BancoEmprestados Emprestados);
+	public boolean registrarDevolucao(BancoEmprestados Emprestados) throws NaoEmprestadoException;
 }

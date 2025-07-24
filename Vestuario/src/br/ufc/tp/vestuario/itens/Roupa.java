@@ -3,16 +3,16 @@ package br.ufc.tp.vestuario.itens;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
-public abstract class Roupa extends Item {
+public abstract class Roupa extends Item implements ILavavel {
 	
 	protected GregorianCalendar ultima_lavagem;
 	protected TamanhoEnum tamanho;
 	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 	
 	
-	public Roupa(String id, String Loja_Origem, String Cor, ConservacaoEnum Conservacao, GregorianCalendar ult_lavagem, TamanhoEnum tamanho) {
+	public Roupa(String id, String Loja_Origem, String Cor, ConservacaoEnum Conservacao, TamanhoEnum tamanho) {
 		super(id, Loja_Origem, Cor, Conservacao);
-		ultima_lavagem = ult_lavagem;
+		ultima_lavagem = null;
 		this.tamanho = tamanho;
 	}
 	
@@ -33,11 +33,11 @@ public abstract class Roupa extends Item {
 		ultima_lavagem = ultima;
 		System.out.println("Lavagem registrada " + formato.format(ultima_lavagem.getTime()));
 	}
+	
 	//Informa a ultima lavagem
-	public GregorianCalendar getUltima_lavagem() {
+	public GregorianCalendar getUltimaLavagem() {
 		return ultima_lavagem;
 	}
-	
 	
 	
 }
